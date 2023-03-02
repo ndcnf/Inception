@@ -1,0 +1,12 @@
+services:
+  nginx:
+    image: nginx
+    container_name: my-nginx
+    volumes:
+      - /Users/nchennaf/sgoinfre/nchennaf/volumes:/app
+      - patate_db:/app2
+    ports:
+      - 8080:80
+
+volumes:
+  patate_db:
