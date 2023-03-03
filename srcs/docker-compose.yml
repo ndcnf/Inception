@@ -4,10 +4,52 @@ services:
     container_name: my-nginx
     volumes:
       - /Users/nchennaf/sgoinfre/nchennaf/volumes:/app
+      #- patate_db:/app2
+    ports:
+      #- 8082:80
+      - 443:443
+    networks:
+      - lan
 
-      - patate_db:/app2
+  mariadb:
+    image: mariadb
+    container_name: my-maria
+    volumes:
+      - DB:/var/lib/mysql
+   # ports:
+    #  - 8081:80
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PWD}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_USER_PASSWORD}
+    networks:
+      - lan
+
+  wordpress:
+    image: wordpress
+    container_name: my-wordpress
+    volumes:
+      - /Users/nchennaf/sgoinfre/nchennaf/volumes:/app
+      - WordPress:/var/www/html
+      #- patate_db:/app2
     ports:
       - 8080:80
+    networks:
+      - lan
+
+  adminer:
+    image: adminer
+    container_name: my-adminer
+    ports:
+      - 8081:8080
+    networks:
+      - lan
+
 
 volumes:
-  patate_db:
+  #patate_db:
+  WordPress:
+  DB:
+
+networks:
+  lan:
