@@ -1,19 +1,28 @@
+version: '3'
 services:
   nginx:
     image: nginx
+    # image: build ... Dockerfile
     container_name: my-nginx
     volumes:
-      - /Users/nchennaf/sgoinfre/nchennaf/volumes:/app
+      - /Users/nchennaf/sgoinfre/nchennaf/volumes/nginx:/app
+     # - /Users/nchennaf/sgoinfre/nchennaf/volumes/nginx:/app
+      - WordPress:/var/www/nginx
+      - /Users/nchennaf/sgoinfre/nchennaf/volumes/config:/etc/nginx/conf.d
+      - /Users/nchennaf/sgoinfre/nchennaf/volumes/sitebidon:/usr/share/nginx/html
+      - /Users/nchennaf/sgoinfre/nchennaf/volumes/ssl:/etc/ssl
       #- patate_db:/app2
     ports:
-      #- 8082:80
+      - 8082:80
       - 443:443
     networks:
       - lan
+    depends_on:
+      - wordpress
 
   mariadb:
     image: mariadb
-    container_name: my-maria
+    container_name: my-mariadb
     volumes:
       - DB:/var/lib/mysql
    # ports:
@@ -26,10 +35,10 @@ services:
       - lan
 
   wordpress:
-    image: wordpress
+    image: wordpress:5.1.1-fpm-alpine
     container_name: my-wordpress
     volumes:
-      - /Users/nchennaf/sgoinfre/nchennaf/volumes:/app
+      - /Users/nchennaf/sgoinfre/nchennaf/volumes/wordpress:/app
       - WordPress:/var/www/html
       #- patate_db:/app2
     ports:

@@ -24,6 +24,9 @@ down:
 ps:
 		${DOCKER} ps -a
 
+nwk:
+		docker network ls
+
 # ---- EXECUTIONS ----
 execn:
 		${DOCKER} exec -it ${NGINX} bash
@@ -39,16 +42,22 @@ execa:
 
 # ---- LOGS ----
 logsn:
-		docker logs my-${NGINX}
+		${DOCKER} logs ${NGINX}
 
 logsm:
-		docker logs my-${MARIADB}
+		${DOCKER} logs ${MARIADB}
 
 logsw:
-		docker logs my-${WORDPRESS}
+		${DOCKER} logs ${WORDPRESS}
 
 logsa:
-		docker logs my-${ADMINER}
+		${DOCKER} logs ${ADMINER}
+
+logs:
+		${DOCKER} logs
+
+live:
+		${DOCKER} logs -f
 
 # ---- CLEAN, RE & PHONIES ----
 clean: down
@@ -59,6 +68,6 @@ fclean: clean
 re:		fclean all
 
 .PHONY:	all clean fclean re \
-		stop down ps \
+		stop down ps nwk \
 		execn execm execw execa \
-		logsn logsm logsw logsa
+		logsn logsm logsw logsa logs live
