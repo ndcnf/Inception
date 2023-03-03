@@ -6,8 +6,8 @@ services:
     container_name: my-nginx
     volumes:
       - /Users/nchennaf/sgoinfre/nchennaf/volumes/nginx:/app
-     # - /Users/nchennaf/sgoinfre/nchennaf/volumes/nginx:/app
       - WordPress:/var/www/nginx
+      # - WordPress:/var/www/html
       - /Users/nchennaf/sgoinfre/nchennaf/volumes/config:/etc/nginx/conf.d
       - /Users/nchennaf/sgoinfre/nchennaf/volumes/sitebidon:/usr/share/nginx/html
       - /Users/nchennaf/sgoinfre/nchennaf/volumes/ssl:/etc/ssl
@@ -28,9 +28,14 @@ services:
    # ports:
     #  - 8081:80
     environment:
+      # MARIADB_DATABASE: wordpress
+      MARIADB_DATABASE: ${DB_NAME}
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PWD}
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD: ${DB_USER_PASSWORD}
+      MYSQL_TCP_PORT: ${DB_PORT}
+    expose:
+      - ${DB_PORT}
     networks:
       - lan
 
