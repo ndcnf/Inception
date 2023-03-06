@@ -19,6 +19,7 @@ services:
       - lan
     depends_on:
       - wordpress
+    restart: on-failure
 
   mariadb:
     image: mariadb
@@ -38,6 +39,7 @@ services:
       - ${DB_PORT}
     networks:
       - lan
+    restart: on-failure
 
   wordpress:
     image: wordpress:5.1.1-fpm-alpine
@@ -50,6 +52,7 @@ services:
       - 8080:80
     networks:
       - lan
+    restart: on-failure
 
   adminer:
     image: adminer
@@ -58,7 +61,7 @@ services:
       - 8081:8080
     networks:
       - lan
-
+    restart: on-failure
 
 volumes:
   #patate_db:

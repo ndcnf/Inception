@@ -2,15 +2,28 @@ NAME = inception
 WDIR = srcs
 ENV = ${WDIR}/.env
 
+include ${ENV}
+
 # ---- IMAGES ----
 NGINX = nginx
 MARIADB = mariadb
 WORDPRESS = wordpress
 ADMINER = adminer
 
+MKDIR = mkdir -p
 DOCKER = docker compose --project-directory ${WDIR} --env-file ${ENV} -p ${NAME}
 
-all: 	${NAME}
+all: 	volume dirs ${NAME}
+
+volume:
+		$(MKDIR) $(VOLUME_DIR)
+		$(MKDIR) $(VOLUME_WP)
+		$(MKDIR) $(VOLUME_DB)
+
+dirs:
+		$(MKDIR) $(NGINX_DIR)
+		$(MKDIR) $(NGINX_SSL)
+		$(MKDIR) $(NGINX_CONF)
 
 ${NAME}:
 		${DOCKER} up -d
@@ -68,6 +81,6 @@ fclean: clean
 re:		fclean all
 
 .PHONY:	all clean fclean re \
-		stop down ps nwk \
+		stop down ps nwk volume dirs \
 		execn execm execw execa \
 		logsn logsm logsw logsa logs live
