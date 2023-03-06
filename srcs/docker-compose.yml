@@ -3,15 +3,14 @@ services:
   nginx:
     image: nginx
     # image: build ... Dockerfile
-    container_name: my-nginx
+    container_name: nginx
     volumes:
-      - /Users/nchennaf/sgoinfre/nchennaf/volumes/nginx:/app
+      - ${NGINX_DIR}:/app
       - WordPress:/var/www/nginx
       # - WordPress:/var/www/html
-      - /Users/nchennaf/sgoinfre/nchennaf/volumes/config:/etc/nginx/conf.d
-      - /Users/nchennaf/sgoinfre/nchennaf/volumes/sitebidon:/usr/share/nginx/html
-      - /Users/nchennaf/sgoinfre/nchennaf/volumes/ssl:/etc/ssl
-      #- patate_db:/app2
+      - ${NGINX_CONF}:/etc/nginx/conf.d
+      - ${VOLUME_DIR}/sitebidon:/usr/share/nginx/html
+      - ${NGINX_SSL}:/etc/ssl
     ports:
       - 8082:80
       - 443:443
@@ -23,13 +22,12 @@ services:
 
   mariadb:
     image: mariadb
-    container_name: my-mariadb
+    container_name: mariadb
     volumes:
       - DB:/var/lib/mysql
    # ports:
     #  - 8081:80
     environment:
-      # MARIADB_DATABASE: wordpress
       MARIADB_DATABASE: ${DB_NAME}
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PWD}
       MARIADB_USER: ${DB_USER}
@@ -43,9 +41,9 @@ services:
 
   wordpress:
     image: wordpress:5.1.1-fpm-alpine
-    container_name: my-wordpress
+    container_name: wordpress
     volumes:
-      - /Users/nchennaf/sgoinfre/nchennaf/volumes/wordpress:/app
+      - ${VOLUME_WP}:/app
       - WordPress:/var/www/html
       #- patate_db:/app2
     ports:
@@ -56,7 +54,7 @@ services:
 
   adminer:
     image: adminer
-    container_name: my-adminer
+    container_name: adminer
     ports:
       - 8081:8080
     networks:

@@ -77,6 +77,7 @@ clean: down
 
 fclean: clean
 		${DOCKER} down --volumes
+		rm -rf ${VOLUME_DIR}
 
 re:		fclean all
 

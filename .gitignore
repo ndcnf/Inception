@@ -1,1 +1,3 @@
 srcs/.env
+_config/nginx-selfsigned.key
+_config/nginx-selfsigned.crt
