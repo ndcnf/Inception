@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    env_file: .env
+    # env_file: .env
     # image: nginx
     build: requirements/nginx
     container_name: nginx
@@ -21,6 +21,8 @@ services:
     depends_on:
       - wordpress
     restart: on-failure
+
+############################################################
 
   mariadb:
     image: mariadb
@@ -42,6 +44,8 @@ services:
       - lan
     restart: on-failure
 
+  ############################################################
+
   wordpress:
     image: wordpress:5.1.1-fpm-alpine
     # build: requirements/wordpress
@@ -51,9 +55,21 @@ services:
       - WordPress:/var/www/html
     ports:
       - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_USER_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      # Mode DEBUG a ENLEVER ENSUITE
+      WORDPRESS_DEBUG: 1
     networks:
       - lan
+    depends_on:
+      - mariadb
     restart: on-failure
+
+  ############################################################
 
   adminer:
     image: adminer
@@ -64,6 +80,8 @@ services:
     networks:
       - lan
     restart: on-failure
+
+  ############################################################
 
 volumes:
   WordPress:
