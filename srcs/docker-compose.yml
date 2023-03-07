@@ -47,12 +47,14 @@ services:
   ############################################################
 
   wordpress:
-    image: wordpress:5.1.1-fpm-alpine
+    image: wordpress:6.1.1-fpm-alpine
     # build: requirements/wordpress
     container_name: wordpress
     volumes:
-      - ${VOLUME_WP}:/app
+      - ${VOLUME_WP}:/var/www/html2
       - WordPress:/var/www/html
+      - ${WP_CONF}/wp-config.php:/var/www/html/wp-config.php
+      # - ${VOLUME_WP}:/app
     ports:
       - 8080:80
     environment:
