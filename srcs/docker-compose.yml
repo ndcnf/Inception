@@ -47,8 +47,8 @@ services:
   ############################################################
 
   wordpress:
-    image: wordpress:6.1.1-fpm-alpine
-    # build: requirements/wordpress
+    # image: wordpress:6.1.1-fpm-alpine
+    build: requirements/wordpress
     container_name: wordpress
     volumes:
       - ${VOLUME_WP}:/var/www/html2
