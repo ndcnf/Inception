@@ -6,13 +6,14 @@ services:
     build: requirements/nginx
     container_name: nginx
     volumes:
-      - ${NGINX_DIR}:/app
+      # - ${NGINX_DIR}:/app
       - WordPress:/var/www/nginx
       # - WordPress:/var/www/html
       - ${NGINX_CONF}:/etc/nginx/http.d
       # - ${NGINX_CONF}:/etc/nginx/conf.d
       # - ${VOLUME_DIR}/sitebidon:/usr/share/nginx/html
       - ${NGINX_SSL}:/etc/ssl
+      - ${NGINX_LOGS}:/var/log/nginx
     ports:
       # - 8082:80
       - 443:443
@@ -50,11 +51,10 @@ services:
     # image: wordpress:6.1.1-fpm-alpine
     build: requirements/wordpress
     container_name: wordpress
+    working_dir: /var/www/html
     volumes:
       - ${VOLUME_WP}:/var/www/html2
       - WordPress:/var/www/html
-      - ${WP_CONF}/wp-config.php:/var/www/html/wp-config.php
-      # - ${VOLUME_WP}:/app
     ports:
       - 8080:80
     environment:
@@ -63,6 +63,12 @@ services:
       WORDPRESS_DB_PASSWORD: ${DB_USER_PASSWORD}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      WORDPRESS_TITLE: ${WORDPRESS_TITLE}
+      WORDPRESS_EMAIL: ${WORDPRESS_EMAIL}
+      WORDPRESS_URL: ${DOMAIN_NAME}
+      WORDPRESS_ADMIN: ${WORDPRESS_ADMIN}
+      WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
+
       # Mode DEBUG a ENLEVER ENSUITE
       WORDPRESS_DEBUG: 1
     networks:

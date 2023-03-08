@@ -13,7 +13,7 @@ ADMINER = adminer
 MKDIR = mkdir -p
 DOCKER = docker compose --project-directory ${WDIR} --env-file ${ENV} -p ${NAME}
 
-all: 	volume dirs ${NAME}
+all:	volume dirs ${NAME}
 
 volume:
 		$(MKDIR) $(VOLUME_DIR)
@@ -26,7 +26,7 @@ dirs:
 		$(MKDIR) $(NGINX_CONF)
 
 ${NAME}:
-		${DOCKER} up -d
+		${DOCKER} up -d --build
 
 stop:
 		${DOCKER} stop
@@ -72,6 +72,9 @@ logs:
 live:
 		${DOCKER} logs -f
 
+build:
+		${DOCKER} build --no-cache
+
 # ---- CLEAN, RE & PHONIES ----
 clean: down
 
@@ -83,5 +86,5 @@ re:		fclean all
 
 .PHONY:	all clean fclean re \
 		stop down ps nwk volume dirs \
-		execn execm execw execa \
+		execn execm execw execa build \
 		logsn logsm logsw logsa logs live

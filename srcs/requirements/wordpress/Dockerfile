@@ -1,16 +1,18 @@
 FROM alpine:3.16
+
 RUN apk update
 RUN apk add bash vim curl
+RUN apk add php8 php8-fpm php8-mysqli php8-phar php8-curl php8-iconv
+RUN apk add mariadb-client
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-# RUN php wp-cli.phar --info
-#json php-mysqli php-fpm
-# RUN apk add
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
 
+COPY conf/wp-entrypoint.sh /
+COPY conf/www.conf /etc/php8/php-fpm.d/www.conf
 
-## Devrait eviter l'erreur "Error response from daemon: failed to create shim: OCI runtime create failed: container_linux.go:380: starting container process caused: exec: "php-fpm": executable file not found in $PATH: unknown"
-# RUN chmod
-# CMD ["php-fpm"]
+RUN chmod -x /wp-entrypoint.sh
 
-## SUPPRIMER ET REMPLACER
-CMD sleep infinity
+CMD ["bash", "/wp-entrypoint.sh"]
+
 EXPOSE 9000
