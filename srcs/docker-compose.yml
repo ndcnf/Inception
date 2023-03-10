@@ -26,8 +26,8 @@ services:
 ############################################################
 
   mariadb:
-    image: mariadb
-    # build: requirements/mariadb
+    # image: mariadb
+    build: requirements/mariadb
     container_name: mariadb
     volumes:
       - DB:/var/lib/mysql
