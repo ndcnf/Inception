@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ ! -e wp-confi.php ]
+if [ ! -e wp-config.php ]
 then
 	wp core download --locale=fr_FR
 

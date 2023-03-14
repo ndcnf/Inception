@@ -31,6 +31,7 @@ services:
     container_name: mariadb
     volumes:
       - DB:/var/lib/mysql
+      # - DB:/data
    # ports:
     #  - 8081:80
     environment:
