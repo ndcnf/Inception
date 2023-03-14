@@ -40,10 +40,13 @@ mariadb -e "DROP DATABASE test"
 mariadb -e "FLUSH PRIVILEGES"
 # Any subsequent tries to run queries this way will get access denied because lack of usr/pwd param
 
-# [ ] CREER l'USER
-mariadb -e "CREATE USER 'nadia'@localhost IDENTIFIED BY '5678'"
 # [ ] CREER DB wordpress
 mariadb -e "CREATE DATABASE wordpress"
+# [ ] CREER l'USER
+mariadb -e "CREATE USER 'nadia'@'%' IDENTIFIED BY '5678'"
+# mariadb -e "CREATE USER 'julien'@localhost IDENTIFIED BY '1234'"
+mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'nadia'@'%'"
+# mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'julien'@'localhost'" --> sera le user pour WORDPRESS pas MARIADB
 # [ ] Trouver un tuto pour lier Adminer avec le tout (aled)
 # si ca fonctionne avec Adminer, cela fonctionnera avec WordPress
 
@@ -54,10 +57,12 @@ mariadb -e "SHOW DATABASES"
 ################################################################################
 
 
+#  Pour modifier et accepter les connexions en dehors du localhost
+sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
+sed -i "s|.*skip-networking.*|#skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+
+#relancer ensuite ?
 
 # # fi
 
 # php-fpm8 -F
-
-## supprimer
-sleep infinity
