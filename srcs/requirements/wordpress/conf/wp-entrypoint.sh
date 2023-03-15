@@ -3,6 +3,9 @@ if [ ! -e wp-config.php ]
 then
 	wp core download --locale=fr_FR
 
+
+	sleep 5
+
 	wp config create --dbname=${WORDPRESS_DB_NAME} \
 	--dbuser=${WORDPRESS_DB_USER} \
 	--dbpass=${WORDPRESS_DB_PASSWORD} \
