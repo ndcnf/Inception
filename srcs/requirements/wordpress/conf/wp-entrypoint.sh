@@ -13,9 +13,6 @@ then
 	--dbpass=${WORDPRESS_DB_PASSWORD} \
 	--dbhost=${WORDPRESS_DB_HOST}
 
-	# wp db create --dbuser=${WORDPRESS_DB_USER} \
-	# --dbpass=${WORDPRESS_DB_PASSWORD}
-
 	wp core install --url=${WORDPRESS_URL} \
 	--title="${WORDPRESS_TITLE}" \
 	--admin_user=${WORDPRESS_ADMIN} \
@@ -30,4 +27,5 @@ then
 
 fi
 
+# force to stay in foreground, and ignore daemonize option from config file
 php-fpm8 -F

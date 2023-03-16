@@ -7,8 +7,6 @@ mariadb-install-db --datadir=/var/lib/mysql
 chown -R mysql:mysql /var/lib/mysql/
 chmod -R 750 /var/lib/mysql/
 
-#relancer ensuite !
-# pkill mariadb
 /usr/bin/mariadbd-safe --datadir=/var/lib/mysql --nowatch
 
 # mariadb --password=1234
@@ -41,11 +39,12 @@ mariadb -e "FLUSH PRIVILEGES"
 # mariadb -e "SHOW DATABASES"
 ################################################################################
 
-# # fi
+
 
 ################################################################################
 # SUPPRIMER, remplacer par une boucle qui attend
-sleep infinity
+# sleep infinity
 #### REMPLACER PAR
-
+pkill maria
+/usr/bin/mariadbd-safe --datadir=/var/lib/mysql
 ####
