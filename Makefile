@@ -31,6 +31,9 @@ ${NAME}:
 stop:
 		${DOCKER} stop
 
+up:
+		${DOCKER} up
+
 down:
 		${DOCKER} down
 

@@ -66,6 +66,7 @@ services:
       WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
       WORDPRESS_TITLE: ${WORDPRESS_TITLE}
       WORDPRESS_EMAIL: ${WORDPRESS_EMAIL}
+      WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
       WORDPRESS_URL: ${DOMAIN_NAME}
       WORDPRESS_ADMIN: ${WORDPRESS_ADMIN}
       WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
@@ -78,19 +79,19 @@ services:
       - mariadb
     restart: on-failure
 
-  ############################################################
+  # ############################################################
 
-  adminer:
-    image: adminer
-    # build: requirements/bonus
-    container_name: adminer
-    ports:
-      - 8081:8080
-    networks:
-      - lan
-    restart: on-failure
+  # adminer:
+  #   image: adminer
+  #   # build: requirements/bonus
+  #   container_name: adminer
+  #   ports:
+  #     - 8081:8080
+  #   networks:
+  #     - lan
+  #   restart: on-failure
 
-  ############################################################
+  # ############################################################
 
 volumes:
   WordPress:
