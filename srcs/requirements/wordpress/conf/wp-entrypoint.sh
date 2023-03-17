@@ -3,9 +3,10 @@ if [ ! -e wp-config.php ]
 then
 	wp core download --locale=fr_FR
 
-	while ! mysqladmin --host=${WORDPRESS_DB_HOST} --user=${DB_USER} --password=${DB_USER_PASSWORD} ping --silent;
+	while ! mysqladmin --host=${WORDPRESS_DB_HOST} --user=${DB_USER} --password=${DB_USER_PASSWORD} ping --silent ;
 	do
-	sleep 1
+		echo "Waiting for MariaDB..."
+		sleep 1
 	done
 
 	wp config create --dbname=${WORDPRESS_DB_NAME} \

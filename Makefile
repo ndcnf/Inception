@@ -31,9 +31,6 @@ ${NAME}:
 stop:
 		${DOCKER} stop
 
-up:
-		${DOCKER} up
-
 down:
 		${DOCKER} down
 
@@ -78,6 +75,9 @@ live:
 build:
 		${DOCKER} build --no-cache
 
+prune:
+		docker image prune -af
+
 # ---- CLEAN, RE & PHONIES ----
 clean: down
 
@@ -89,5 +89,5 @@ re:		fclean all
 
 .PHONY:	all clean fclean re \
 		stop down ps nwk volume dirs \
-		execn execm execw execa build \
+		execn execm execw execa build prune \
 		logsn logsm logsw logsa logs live

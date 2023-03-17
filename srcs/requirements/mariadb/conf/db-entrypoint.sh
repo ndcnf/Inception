@@ -1,19 +1,18 @@
 #!/bin/bash
 
+chown -R mysql:mysql /var/lib/mysql/
+chmod -R 750 /var/lib/mysql/
 if [ ! -d /var/lib/mysql/mysql ]
 then
 	echo "Installing MariaDB..."
 	mariadb-install-db --datadir=/var/lib/mysql
 
-	chown -R mysql:mysql /var/lib/mysql/
-	chmod -R 750 /var/lib/mysql/
-
 	/usr/bin/mariadbd-safe --datadir=/var/lib/mysql --nowatch
 
 	# RETURN values examples: 0 OK | 2 unreachable
-	while ! mysqladmin --host=${WORDPRESS_DB_HOST} ping --silent;
+	while ! mysqladmin --host=${WORDPRESS_DB_HOST} ping --silent ;
 	do
-		echo "Waiting for WordPress..."
+		echo "Waiting..."
 		sleep 1
 	done
 
@@ -31,9 +30,9 @@ then
 	mariadb -e "FLUSH PRIVILEGES"
 
 	echo "Restarting MariadB for changes..."
-	pkill maria
-	/usr/bin/mariadbd-safe --datadir=/var/lib/mysql
+	sleep 1
+	pkill -9 maria
 else
 	echo "MariaDB already installed."
-	/usr/bin/mariadbd-safe --datadir=/var/lib/mysql
 fi
+/usr/bin/mariadbd-safe --datadir=/var/lib/mysql
