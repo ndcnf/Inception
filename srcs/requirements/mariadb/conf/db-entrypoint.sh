@@ -23,10 +23,10 @@ then
 	mariadb -e "DROP DATABASE test"
 
 	echo "Creating the database and a user..."
-	mariadb -e "CREATE DATABASE wordpress"
-	mariadb -e "CREATE USER 'nadia'@'%' IDENTIFIED BY '5678'"
-	mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'nadia'@'%'"
-	mariadb -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '1234'"
+	mariadb -e "CREATE DATABASE ${MARIADB_DATABASE}"
+	mariadb -e "CREATE USER '${MARIADB_USER}'@'%' IDENTIFIED BY '${MARIADB_PASSWORD}'"
+	mariadb -e "GRANT ALL PRIVILEGES ON wordpress.* TO '${MARIADB_USER}'@'%'"
+	mariadb -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}'"
 	mariadb -e "FLUSH PRIVILEGES"
 
 	echo "Restarting MariadB for changes..."
